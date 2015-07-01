@@ -1,6 +1,7 @@
 (ns slacky.core
   (:gen-class)
   (:require
+   [clojure.repl :refer [pst]]
    [clj-slack-client
     [core :as slack]
     [team-state :as state]
@@ -28,7 +29,7 @@
     (when-let [command (find-command text)]
       (command msg))
     (catch Exception ex
-      (clojure.repl/pst (Exception. (str "Exception trying to handle slack message\n" (str msg) ".") ex))
+      (pst (Exception. (str "Exception trying to handle slack message\n" (str msg) ".") ex))
       (try (tx/say-message channel-id "You broke me. Check my logs for the exception")))))
 
 
@@ -59,7 +60,7 @@
   (try
     (handle-slack-event event)
     (catch Exception ex
-      (clojure.repl/pst (Exception. (str "Exception trying to handle slack event\n" (str event) ".")) ex))))
+      (pst (Exception. (str "Exception trying to handle slack event\n" (str event) ".")) ex))))
 
 
 (defn wait-for-console-quit []
