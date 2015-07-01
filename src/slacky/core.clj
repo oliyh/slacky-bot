@@ -5,7 +5,9 @@
     [core :as slack]
     [team-state :as state]
     [web :as web]
-    [rtm-transmit :as tx]]))
+    [rtm-transmit :as tx]]
+   [slacky
+    [meme :as meme]]))
 
 (def ^:dynamic *api-token* nil)
 
@@ -14,9 +16,10 @@
 
     #"^\-slacky.*" (fn [{:keys [channel]}] (tx/say-message channel "Hello, I'm here"))
 
-    #"^\-meme .*" (fn [{:keys [channel]}] (tx/say-message channel "One does not simply meme before the functionality is ready"))
+    #"^\-meme .*" meme/generate-meme
 
     nil))
+
 
 (defn handle-message
   "translates a slack message into a command, handles that command, and communicates the reply"
@@ -56,7 +59,7 @@
   (try
     (handle-slack-event event)
     (catch Exception ex
-      (printex (str "Exception trying to handle slack event\n" (str event) ".") ex))))
+      (clojure.repl/pst (Exception. (str "Exception trying to handle slack event\n" (str event) ".")) ex))))
 
 
 (defn wait-for-console-quit []
@@ -76,7 +79,7 @@
 
 (defn start
   ([]
-   (start (slurp "api-token.txt")))
+   (start (.trim (slurp "api-token.txt"))))
   ([api-token]
    (try
      (alter-var-root (var *api-token*) (constantly api-token))
