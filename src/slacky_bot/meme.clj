@@ -1,4 +1,4 @@
-(ns slacky.meme
+(ns slacky-bot.meme
   (:require [clj-http.client :as http]
             [cheshire.core :as json]
             [clj-slack-client

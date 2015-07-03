@@ -1,4 +1,4 @@
-(ns slacky.core
+(ns slacky-bot.core
   (:gen-class)
   (:require
    [clojure.repl :refer [pst]]
@@ -7,7 +7,7 @@
     [team-state :as state]
     [web :as web]
     [rtm-transmit :as tx]]
-   [slacky
+   [slacky-bot
     [meme :as meme]]))
 
 (def ^:dynamic *api-token* nil)
@@ -72,7 +72,7 @@
 
 (defn shutdown-app []
   (slack/disconnect)
-  (println "...slacky dying"))
+  (println "...slacky-bot dying"))
 
 
 (defn stop []
@@ -85,10 +85,10 @@
    (try
      (alter-var-root (var *api-token*) (constantly api-token))
      (slack/connect *api-token* try-handle-slack-event)
-     (println "slacky is running")
+     (println "slacky-bot is running")
      (catch Exception ex
        (println ex)
-       (println "couldn't start slacky")
+       (println "couldn't start slacky-bot")
        (stop)))))
 
 (defn restart []

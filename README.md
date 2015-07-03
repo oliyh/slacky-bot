@@ -1,8 +1,10 @@
-# slacky
+# slacky-bot
 
 A Slack bot for all the bits we miss from Sassy
 
 Based on work by https://github.com/tonyvanriet
+
+For slacky-as-a-service see https://github.com/oliy/slacky
 
 # Authentication
 [Create a new bot account](https://juxt.slack.com/services/new/bot) and write the api-token into a file called `/api-token.txt`.
